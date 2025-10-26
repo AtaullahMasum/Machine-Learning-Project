@@ -256,26 +256,25 @@ preprocessor = ColumnTransformer([
 
 ### Model Performance (Cross-Validation RMSE)
 
-Model	           Log-space RMSE
-Ridge	            0.199
-XGBoost	          0.224
-Linear Regression	0.201
-Lasso	            0.200
+| Model	           |     Log-space RMSE|
+-------------------|-------------------|
+|Ridge	           |     0.199         |
+|XGBoost	         |     0.224         |
+|Linear Regression |	   0.201         |
+|Lasso	           |     0.200         |
 
 ### Hyperparameter Tuning
 
 The project includes comprehensive hyperparameter optimization:
 
 ```python
-📈 Results
-Model Performance (Cross-Validation RMSE)
-Model	Log-space RMSE
-Ridge	0.199
-XGBoost	0.224
-Linear Regression	0.201
-Lasso	0.200
-Hyperparameter Tuning
-The project includes comprehensive hyperparameter optimization:
+param_grid = {
+    'model__n_estimators': [100, 200, 500, 800, 1000, 1500],
+    'model__max_depth': [2, 4, 6, 8, 10, 12],
+    'model__learning_rate': [0.01, 0.05, 0.1, 0.2, 0.3],
+    'model__subsample': [0.6, 0.7, 0.8, 0.9, 1.0],
+    'model__colsample_bytree': [0.6, 0.7, 0.8, 0.9, 1.0]
+}
 ```
 
 ## 🌐 Deployment
