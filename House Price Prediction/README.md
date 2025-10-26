@@ -128,6 +128,7 @@ streamlit
 
 # 📁 Project Structure
 
+```txt
 House Price Prediction/
 ├── 📁 data/
 │   ├── train.csv                  # Training dataset
@@ -146,5 +147,7 @@ House Price Prediction/
 |── README.md                        # Project documentation
 |___ requirement.txt
 |___ Docker
+
+```
 
 
