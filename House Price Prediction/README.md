@@ -149,5 +149,236 @@ House Price Prediction/
 |___ Docker
 
 ```
+## 💻 Usage
+
+### Training the Model
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+import joblib
+
+# Load data
+train = pd.read_csv('../data/train.csv')
+
+# Prepare features and target
+X = train.drop(columns=['price', 'price_log'])
+y = train['price_log']
+
+# Train model (example with XGBoost)
+pipe_xgb.fit(X, y)
+
+# Save model
+joblib.dump(pipe_xgb, "../models/xgb_pipeline.joblib")
+```
+
+### Making Predictions
+
+```python
+# Load trained model
+model = joblib.load("../models/xgb_pipeline.joblib")
+
+# Make predictions
+def predict(df):
+    preds_log = model.predict(df)
+    preds = inv_log_target(preds_log)  # Convert from log space
+    return preds
+
+# Example usage
+test_data = pd.read_csv('../data/test.csv')
+predictions = predict(test_data)
+```
 
 
+## Web Interface
+
+#### Launch the Streamlit app:
+
+```bash
+streamlit run src/app_streamlit.py
+```
+
+The web interface allows:
+
+* 📤 Uploading CSV files with house features
+
+* 🔮 Getting instant price predictions
+
+* 📥 Downloading results as CSV
+
+## 🤖 Models Implemented
+
+### Linear Models
+
+* LinearRegression - Basic linear regression
+
+* Ridge - L2 regularization
+
+* Lasso - L1 regularization
+
+* ElasticNet - Combined L1 + L2 regularization
+
+* BayesianRidge - Bayesian ridge regression
+
+### Tree-based & Ensemble Models
+* XGBRegressor - Gradient boosting (best performer)
+
+* RandomForestRegressor - Random forest
+
+* GradientBoostingRegressor - Gradient boosting
+
+* AdaBoostRegressor - Adaptive boosting
+
+### Pipeline Architecture
+
+```python
+# Custom preprocessing pipeline
+numeric_pipeline = Pipeline([
+    ('num_selector', NumericSelector(numeric_feats)),
+    ('fill_missing', FillMissingTransformer()),
+    ('scaler', StandardScaler())
+])
+
+categorical_pipeline = Pipeline([
+    ('cat_selector', CatagoricalSelector(categorical_feats)),
+    ('imputer', FillMissingTransformer()),
+    ('onehot', OneHotEncoder(handle_unknown='ignore'))
+])
+
+# Combined preprocessor
+preprocessor = ColumnTransformer([
+    ('numeric', numeric_pipeline, numeric_feats),
+    ('categorical', categorical_pipeline, categorical_feats)
+])
+```
+
+## 📈 Results
+
+### Model Performance (Cross-Validation RMSE)
+
+Model	           Log-space RMSE
+Ridge	            0.199
+XGBoost	          0.224
+Linear Regression	0.201
+Lasso	            0.200
+
+### Hyperparameter Tuning
+
+The project includes comprehensive hyperparameter optimization:
+
+```python
+📈 Results
+Model Performance (Cross-Validation RMSE)
+Model	Log-space RMSE
+Ridge	0.199
+XGBoost	0.224
+Linear Regression	0.201
+Lasso	0.200
+Hyperparameter Tuning
+The project includes comprehensive hyperparameter optimization:
+```
+
+## 🌐 Deployment
+
+### Streamlit Web App
+
+The project includes a user-friendly web interface:
+
+```python
+import streamlit as st
+import joblib
+from data_utils import inv_log_target
+
+st.title("House Price Predictor")
+model = joblib.load("../models/xgb_pipeline.joblib")
+
+# File upload and prediction interface
+uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
+if uploaded_file:
+    df = pd.read_csv(uploaded_file)
+    predictions = inv_log_target(model.predict(df))
+    st.write("Price Predictions:", predictions)
+```
+
+#### Features:
+
+* ✅ Drag-and-drop CSV upload
+
+* ✅ Instant predictions
+
+* ✅ Results display and download
+
+
+## 🔧 Custom Components
+
+#### Data Utilities (data_utils.py)
+* load_data() - Data loading functions
+
+* log_target() - Log transformation for prices
+
+* inv_log_target() - Inverse log transformation
+
+#### Feature Engineering (features.py)
+
+* NumericSelector - Custom numeric feature selector
+
+* CatagoricalSelector - Custom categorical feature selector
+
+* FillMissingTransformer - Advanced missing value imputation
+
+#### 🚀 Future Enhancements
+
+##### Planned 
+
+1. ###### Advanced Feature Engineering
+
+   * Polynomial features
+
+   * Feature interactions
+
+   * Domain-specific transformations
+
+2. ###### Model Enhancements
+
+   * Neural networks
+
+   * Stacking ensembles
+
+   * Automated feature selection
+
+3. ###### Deployment
+
+   * REST API with FastAPI
+
+   * Database integration
+
+   * Real-time prediction service
+
+4. ###### Monitoring
+
+   * Model performance tracking
+
+   * Data drift detection
+
+   * Automated retraining
+
+## 👥 Contributing
+
+Contributions are welcome! Please feel free to submit pull requests or open issues for:
+
+* 🐛 Bug fixes
+
+* 💡 New features
+
+* 📚 Documentation improvements
+
+* 🧪 Additional models or techniques
+
+## 📄 License
+
+This project is developed for Advanced  learning purposes as part of a machine learning curriculum.
+
+
+###### Built with ❤️ using Python, Scikit-learn, XGBoost, and Streamlit
+
+For questions or support, please open an issue in the repository.
