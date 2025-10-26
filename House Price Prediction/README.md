@@ -61,8 +61,90 @@ This project implements a complete machine learning pipeline for predicting hous
 
 ## Setup
 
-Clone the repository
-'''
+1. Clone the repository
+
+```bash
 git clone <repository-url>
 cd "House Price Prediction"
-'''
+```
+
+2. ### Create virtual environment (Windows)
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+3. ### Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## equired Packages
+
+```txt
+numpy
+pandas
+scikit-learn
+xgboost
+joblib
+streamlit
+```
+
+## 📊 Dataset
+### Features
+#### Numerical Features:
+
+* area - Property area in square feet
+
+* bedrooms - Number of bedrooms
+
+* bathrooms - Number of bathrooms
+
+* stories - Number of stories
+
+* parking - Number of parking spaces
+
+#### Categorical Features:
+
+* mainroad - Access to main road (yes/no)
+
+* guestroom - Guest room availability (yes/no)
+
+* basement - Basement availability (yes/no)
+
+* hotwaterheating - Hot water heating (yes/no)
+
+* airconditioning - Air conditioning (yes/no)
+
+* prefarea - Preferred area location (yes/no)
+
+* furnishingstatus - Furnishing status (furnished/semi-furnished/unfurnished)
+
+#### Target Variable:
+
+* price - House price in local currency
+
+
+# 📁 Project Structure
+
+House Price Prediction/
+├── 📁 data/
+│   ├── train.csv                  # Training dataset
+│   ├── test.csv                   # Test dataset
+│   └── submission.csv             # Prediction outputs
+├── 📁 models/
+│   └── xgb_pipeline.joblib        # Trained model pipeline
+├── 📁 notebooks/
+│   └── eda_and_model.ipynb        # explorary data Analysis File
+├── 📁 src/
+|   |__ all_step_in_one_file.ipynb  # Main analysis notebook  
+│   ├── data_utils.py               # Data loading & transformation utilities
+│   └── features.py                 # Custom transformers & feature engineering
+|   |__ train.py                    # Model training 
+|   |__ hyperparametertuning.py     # Hyperparameter tuning file 
+|── README.md                        # Project documentation
+|___ requirement.txt
+|___ Docker
+
+
